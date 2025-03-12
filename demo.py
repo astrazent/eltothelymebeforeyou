@@ -71,8 +71,9 @@ def process_hashed_text(hashed_text):
     number = str(number)[:4]  # Lấy 4 chữ số đầu tiên
     positions = [int(digit) for digit in str(number)]
     letters = list(letters)  # Chuyển chuỗi thành danh sách ký tự
+
     for pos in positions:
-        while pos * 2 < len(letters) and letters[pos].isupper():
+        while pos * 2 < len(letters) and letters[pos].isupper() and pos != 0:
             pos *= 2
         if pos < len(letters):  # Kiểm tra tránh lỗi nếu chuỗi quá ngắn
             letters[pos] = letters[pos].upper()
@@ -81,7 +82,7 @@ def process_hashed_text(hashed_text):
     return process_string(s)
 
 # Nhận input từ người dùng
-input_text = input("Nhập chuỗi cần mã hóa: ")
+input_text = input()
 hashed_text = sha256_encrypt(input_text)
 processed_text = process_hashed_text(hashed_text)
-print(f"Chuỗi sau khi xử lý: {processed_text}")
+print(processed_text)
