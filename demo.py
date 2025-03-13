@@ -1,4 +1,6 @@
 import hashlib
+import pyperclip
+import time
 
 def sha256_encrypt(text):
     """Mã hóa chuỗi đầu vào bằng SHA-256"""
@@ -82,7 +84,19 @@ def process_hashed_text(hashed_text):
     return process_string(s)
 
 # Nhận input từ người dùng
-input_text = input()
-hashed_text = sha256_encrypt(input_text)
-processed_text = process_hashed_text(hashed_text)
-print(processed_text)
+i = '1'
+while i == '1':
+    input_text = input("Vui lòng nhập: ")
+    hashed_text = sha256_encrypt(input_text)
+    processed_text = process_hashed_text(hashed_text)
+    pyperclip.copy(processed_text)
+    print(processed_text)
+    print("Đã lưu vào bộ nhớ tạm \u2713") 
+    delete = input("Để không xoá bộ nhớ tạm (bấm phím 2): ")
+    if delete != '2':
+        pyperclip.copy("")
+        print("Đã xoá bộ nhớ tạm \u2713") 
+    i = input("Tiếp tục chạy? (bấm phím 1): ")
+
+# pyinstaller --onefile --icon=favicon.ico demo.py
+# chuột phải file exe --> create a shortcut --> done
