@@ -1,5 +1,8 @@
 import hashlib
 
+# Tổng độ dài mong muốn
+target_length = 23
+
 def sha256_encrypt(text):
     """Mã hóa chuỗi đầu vào bằng SHA-256"""
     sha256_hash = hashlib.sha256()
@@ -11,8 +14,7 @@ def process_string(s, special_chars="!@#$%^&*()"):
     letters = [ch for ch in s if ch.isalpha()]
     digits = [ch for ch in s if ch.isdigit()]
     
-    # Tổng độ dài mong muốn
-    target_length = 23
+    global target_length
     
     # Nếu tổng số ký tự vượt quá target_length, cắt bớt
     i = min(len(letters), len(digits))
@@ -81,8 +83,18 @@ def process_hashed_text(hashed_text):
     s = letters + str(product)
     return process_string(s)
 
-# Nhận input từ người dùng
-input_text = input()
-hashed_text = sha256_encrypt(input_text)
-processed_text = process_hashed_text(hashed_text)
-print(processed_text)
+i = '1'
+while i == '1':
+    length = input("1. chuỗi rút gọn (không dùng thì enter): ")
+    if length == '1':
+        target_length = 12
+    else:
+        target_length = 23
+
+    # Nhận input từ người dùng
+    input_text = input()
+    hashed_text = sha256_encrypt(input_text)
+    processed_text = process_hashed_text(hashed_text)
+    print(processed_text)
+
+    i = input("Tiếp tục chạy? (bấm phím 1): ")
