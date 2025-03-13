@@ -2,6 +2,9 @@ import hashlib
 import pyperclip
 import time
 
+# Tổng độ dài mong muốn
+target_length = 23
+
 def sha256_encrypt(text):
     """Mã hóa chuỗi đầu vào bằng SHA-256"""
     sha256_hash = hashlib.sha256()
@@ -9,12 +12,11 @@ def sha256_encrypt(text):
     return sha256_hash.hexdigest()
 
 def process_string(s, special_chars="!@#$%^&*()"):
+    global target_length
+
     # Tách phần chữ và số
     letters = [ch for ch in s if ch.isalpha()]
     digits = [ch for ch in s if ch.isdigit()]
-    
-    # Tổng độ dài mong muốn
-    target_length = 23
     
     # Nếu tổng số ký tự vượt quá target_length, cắt bớt
     i = min(len(letters), len(digits))
@@ -86,7 +88,13 @@ def process_hashed_text(hashed_text):
 # Nhận input từ người dùng
 i = '1'
 while i == '1':
-    input_text = input("Vui lòng nhập: ")
+    length = input("1. chuỗi rút gọn (không dùng thì enter): ")
+    if length == '1':
+        target_length = 12
+    else:
+        target_length = 23
+
+    input_text = input("Vui lòng nhập chuỗi: ")
     hashed_text = sha256_encrypt(input_text)
     processed_text = process_hashed_text(hashed_text)
     pyperclip.copy(processed_text)
