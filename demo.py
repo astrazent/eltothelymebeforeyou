@@ -1,6 +1,8 @@
 import hashlib
-import pyperclip
 import time
+
+# Tổng độ dài mong muốn
+target_length = 23
 
 # Tổng độ dài mong muốn
 target_length = 23
@@ -17,6 +19,8 @@ def process_string(s, special_chars="!@#$%^&*()"):
     # Tách phần chữ và số
     letters = [ch for ch in s if ch.isalpha()]
     digits = [ch for ch in s if ch.isdigit()]
+    
+    global target_length
     
     # Nếu tổng số ký tự vượt quá target_length, cắt bớt
     i = min(len(letters), len(digits))
@@ -85,7 +89,6 @@ def process_hashed_text(hashed_text):
     s = letters + str(product)
     return process_string(s)
 
-# Nhận input từ người dùng
 i = '1'
 while i == '1':
     length = input("1. chuỗi rút gọn (không dùng thì enter): ")
@@ -94,17 +97,10 @@ while i == '1':
     else:
         target_length = 23
 
-    input_text = input("Vui lòng nhập chuỗi: ")
+    # Nhận input từ người dùng
+    input_text = input()
     hashed_text = sha256_encrypt(input_text)
     processed_text = process_hashed_text(hashed_text)
-    pyperclip.copy(processed_text)
     print(processed_text)
-    print("Đã lưu vào bộ nhớ tạm \u2713") 
-    delete = input("Để không xoá bộ nhớ tạm (bấm phím 2): ")
-    if delete != '2':
-        pyperclip.copy("")
-        print("Đã xoá bộ nhớ tạm \u2713") 
-    i = input("Tiếp tục chạy? (bấm phím 1): ")
 
-# pyinstaller --onefile --icon=favicon.ico demo.py
-# chuột phải file exe --> create a shortcut --> done
+    i = input("Tiếp tục chạy? (bấm phím 1): ")
